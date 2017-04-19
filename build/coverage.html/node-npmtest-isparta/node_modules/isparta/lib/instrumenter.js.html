@@ -1,0 +1,905 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for node-npmtest-isparta/node_modules/isparta/lib/instrumenter.js</title>
+    <meta charset="utf-8">
+    <style>
+        body, html {
+            margin:0; padding: 0;
+        }
+        body {
+            font-family: Arial, Helvetica;
+            font-size: 10pt;
+        }
+        div.header, div.footer {
+            background: #eee;
+            padding: 1em;
+        }
+        div.header {
+            height: 160px;
+            padding: 0 1em 0 1em;
+            z-index: 100;
+            position: fixed;
+            top: 0;
+            border-bottom: 1px solid #666;
+            width: 100%;
+        }
+        div.footer {
+            border-top: 1px solid #666;
+        }
+        div.body {
+            margin-top: 170px;
+        }
+        div.meta {
+            font-size: 90%;
+            text-align: center;
+        }
+        h1, h2, h3 {
+            font-weight: normal;
+        }
+        h1 {
+            font-size: 12pt;
+        }
+        h2 {
+            font-size: 10pt;
+        }
+        pre {
+            font-family: Menlo, Monaco, Consolas, Courier New, monospace;
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            tab-size: 2;
+        }
+
+        div.path { font-size: 110%; }
+        div.path a:link, div.path a:visited { color: #000; }
+        table.coverage { border-collapse: collapse; margin:0; padding: 0 }
+
+        table.coverage td {
+            margin: 0;
+            padding: 0;
+            color: #111;
+            vertical-align: top;
+        }
+        table.coverage td.line-count {
+            width: 50px;
+            text-align: right;
+            padding-right: 5px;
+        }
+        table.coverage td.line-coverage {
+            color: #777 !important;
+            text-align: right;
+            border-left: 1px solid #666;
+            border-right: 1px solid #666;
+        }
+
+        table.coverage td.text {
+        }
+
+        table.coverage td span.cline-any {
+            display: inline-block;
+            padding: 0 5px;
+            width: 40px;
+        }
+        table.coverage td span.cline-neutral {
+            background: #eee;
+        }
+        table.coverage td span.cline-yes {
+            background: #b5d592;
+            color: #999;
+        }
+        table.coverage td span.cline-no {
+            background: #fc8c84;
+        }
+
+        .cstat-yes { color: #111; }
+        .cstat-no { background: #fc8c84; color: #111; }
+        .fstat-no { background: #ffc520; color: #111 !important; }
+        .cbranch-no { background:  yellow !important; color: #111; }
+
+        .cstat-skip { background: #ddd; color: #111; }
+        .fstat-skip { background: #ddd; color: #111 !important; }
+        .cbranch-skip { background: #ddd !important; color: #111; }
+
+        .missing-if-branch {
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: black;
+            color: yellow;
+        }
+
+        .skip-if-branch {
+            display: none;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: #ccc;
+            color: white;
+        }
+
+        .missing-if-branch .typ, .skip-if-branch .typ {
+            color: inherit !important;
+        }
+
+        .entity, .metric { font-weight: bold; }
+        .metric { display: inline-block; border: 1px solid #333; padding: 0.3em; background: white; }
+        .metric small { font-size: 80%; font-weight: normal; color: #666; }
+
+        div.coverage-summary table { border-collapse: collapse; margin: 3em; font-size: 110%; }
+        div.coverage-summary td, div.coverage-summary table  th { margin: 0; padding: 0.25em 1em; border-top: 1px solid #666; border-bottom: 1px solid #666; }
+        div.coverage-summary th { text-align: left; border: 1px solid #666; background: #eee; font-weight: normal; }
+        div.coverage-summary th.file { border-right: none !important; }
+        div.coverage-summary th.pic { border-left: none !important; text-align: right; }
+        div.coverage-summary th.pct { border-right: none !important; }
+        div.coverage-summary th.abs { border-left: none !important; text-align: right; }
+        div.coverage-summary td.pct { text-align: right; border-left: 1px solid #666; }
+        div.coverage-summary td.abs { text-align: right; font-size: 90%; color: #444; border-right: 1px solid #666; }
+        div.coverage-summary td.file { text-align: right; border-left: 1px solid #666; white-space: nowrap;  }
+        div.coverage-summary td.pic { min-width: 120px !important;  }
+        div.coverage-summary a:link { color: #000; }
+        div.coverage-summary a:visited { color: #333; }
+        div.coverage-summary tfoot td { border-top: 1px solid #666; }
+
+        div.coverage-summary .yui3-datatable-sort-indicator, div.coverage-summary .dummy-sort-indicator {
+            height: 10px;
+            width: 7px;
+            display: inline-block;
+            margin-left: 0.5em;
+        }
+        div.coverage-summary .yui3-datatable-sort-indicator {
+            background: no-repeat scroll 0 0 transparent;
+        }
+        div.coverage-summary .yui3-datatable-sorted .yui3-datatable-sort-indicator {
+            background-position: 0 -20px;
+        }
+        div.coverage-summary .yui3-datatable-sorted-desc .yui3-datatable-sort-indicator {
+            background-position: 0 -10px;
+        }
+
+        .high { background: #b5d592 !important; }
+        .medium { background: #ffe87c !important; }
+        .low { background: #fc8c84 !important; }
+
+        span.cover-fill, span.cover-empty {
+            display:inline-block;
+            border:1px solid #444;
+            background: white;
+            height: 12px;
+        }
+        span.cover-fill {
+            background: #ccc;
+            border-right: 1px solid #444;
+        }
+        span.cover-empty {
+            background: white;
+            border-left: none;
+        }
+        span.cover-full {
+            border-right: none !important;
+        }
+        pre.prettyprint {
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .com { color: #999 !important; }
+        .ignore-none { color: #999; font-weight: normal; }
+
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1 style="font-weight: bold;">
+        <a href="https://github.com/npmtest/node-npmtest-isparta">npmtest-isparta (v0.0.1)</a>
+    </h1>
+    <h1>Code coverage report for <span class="entity">node-npmtest-isparta/node_modules/isparta/lib/instrumenter.js</span></h1>
+    <h2>
+        
+        Statements: <span class="metric">26.19% <small>(44 / 168)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Branches: <span class="metric">17.86% <small>(15 / 84)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Functions: <span class="metric">20.59% <small>(7 / 34)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Lines: <span class="metric">24.24% <small>(24 / 99)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../../index.html">All files</a> &#187; <a href="index.html">node-npmtest-isparta/node_modules/isparta/lib/</a> &#187; instrumenter.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+&nbsp;
+var _slicedToArray = (function () { <span class="fstat-no" title="function not covered" >function sliceIterator(arr, i) {</span> <span class="cstat-no" title="statement not covered" >var _arr = []; <span class="cstat-no" title="statement not covered" ></span>var _n = true; <span class="cstat-no" title="statement not covered" ></span>var _d = false; <span class="cstat-no" title="statement not covered" ></span>var _e = undefined; <span class="cstat-no" title="statement not covered" ></span>try { <span class="cstat-no" title="statement not covered" >for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { <span class="cstat-no" title="statement not covered" >_arr.push(_s.value); <span class="cstat-no" title="statement not covered" ></span>if (i &amp;&amp; _arr.length === i) <span class="cstat-no" title="statement not covered" >break; </span></span>} </span>} catch (err) { <span class="cstat-no" title="statement not covered" >_d = true; <span class="cstat-no" title="statement not covered" ></span>_e = err; </span>} finally { <span class="cstat-no" title="statement not covered" >try { <span class="cstat-no" title="statement not covered" >if (!_n &amp;&amp; _i["return"]) <span class="cstat-no" title="statement not covered" >_i["return"](); </span></span>} finally { <span class="cstat-no" title="statement not covered" >if (_d) <span class="cstat-no" title="statement not covered" >throw _e; </span></span>} </span>} <span class="cstat-no" title="statement not covered" ></span>return _arr; </span>} return <span class="fstat-no" title="function not covered" >function (arr, i) {</span> <span class="cstat-no" title="statement not covered" >if (Array.isArray(arr)) { <span class="cstat-no" title="statement not covered" >return arr; </span>} else <span class="cstat-no" title="statement not covered" >if (Symbol.iterator in Object(arr)) { <span class="cstat-no" title="statement not covered" >return sliceIterator(arr, i); </span>} else { <span class="cstat-no" title="statement not covered" >throw new TypeError("Invalid attempt to destructure non-iterable instance"); </span>} </span></span>}; })();
+&nbsp;
+var _extends = Object.assign || <span class="fstat-no" title="function not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >function (target) {</span> <span class="cstat-no" title="statement not covered" >for (var i = 1; i &lt; arguments.length; i++) { <span class="cstat-no" title="statement not covered" >var source = arguments[i]; <span class="cstat-no" title="statement not covered" ></span>for (var key in source) { <span class="cstat-no" title="statement not covered" >if (Object.prototype.hasOwnProperty.call(source, key)) { <span class="cstat-no" title="statement not covered" >target[key] = source[key]; </span>} </span>} </span>} <span class="cstat-no" title="statement not covered" ></span>return target; </span>};</span>
+&nbsp;
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i &lt; props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; <span class="missing-if-branch" title="else path not taken" >E</span>if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { <span class="missing-if-branch" title="else path not taken" >E</span>if (protoProps) defineProperties(Constructor.prototype, protoProps); <span class="missing-if-branch" title="if path not taken" >I</span>if (staticProps) <span class="cstat-no" title="statement not covered" >defineProperties(Constructor, staticProps); </span>return Constructor; }; })();
+&nbsp;
+var _get = <span class="fstat-no" title="function not covered" >function get(object, property, receiver) {</span> <span class="cstat-no" title="statement not covered" >if (object === null) <span class="cstat-no" title="statement not covered" >object = Function.prototype; <span class="cstat-no" title="statement not covered" ></span></span>var desc = Object.getOwnPropertyDescriptor(object, property); <span class="cstat-no" title="statement not covered" ></span>if (desc === undefined) { <span class="cstat-no" title="statement not covered" >var parent = Object.getPrototypeOf(object); <span class="cstat-no" title="statement not covered" ></span>if (parent === null) { <span class="cstat-no" title="statement not covered" >return undefined; </span>} else { <span class="cstat-no" title="statement not covered" >return get(parent, property, receiver); </span>} </span>} else <span class="cstat-no" title="statement not covered" >if ("value" in desc) { <span class="cstat-no" title="statement not covered" >return desc.value; </span>} else { <span class="cstat-no" title="statement not covered" >var getter = desc.get; <span class="cstat-no" title="statement not covered" ></span>if (getter === undefined) { <span class="cstat-no" title="statement not covered" >return undefined; </span>} <span class="cstat-no" title="statement not covered" ></span>return getter.call(receiver); </span>} </span></span>};
+&nbsp;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Instrumenter = undefined;
+&nbsp;
+var _istanbul = require('istanbul');
+&nbsp;
+var _istanbul2 = _interopRequireDefault(_istanbul);
+&nbsp;
+var _babelCore = require('babel-core');
+&nbsp;
+var _esprima = require('esprima');
+&nbsp;
+var _esprima2 = _interopRequireDefault(_esprima);
+&nbsp;
+var _escodegen = require('escodegen');
+&nbsp;
+var _escodegen2 = _interopRequireDefault(_escodegen);
+&nbsp;
+var _sourceMap = require('source-map');
+&nbsp;
+function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? <span class="branch-0 cbranch-no" title="branch not covered" >obj </span>: { default: obj }; }
+&nbsp;
+<span class="fstat-no" title="function not covered" >function _classCallCheck(instance, Constructor) {</span> <span class="cstat-no" title="statement not covered" >if (!(instance instanceof Constructor)) { <span class="cstat-no" title="statement not covered" >throw new TypeError("Cannot call a class as a function"); </span>} </span>}
+&nbsp;
+<span class="fstat-no" title="function not covered" >function _possibleConstructorReturn(self, call) {</span> <span class="cstat-no" title="statement not covered" >if (!self) { <span class="cstat-no" title="statement not covered" >throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); </span>} <span class="cstat-no" title="statement not covered" ></span>return call &amp;&amp; (typeof call === "object" || typeof call === "function") ? call : self; </span>}
+&nbsp;
+function _inherits(subClass, superClass) { <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof superClass !== "function" &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >superClass !== null)</span> { <span class="cstat-no" title="statement not covered" >throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); </span>} subClass.prototype = Object.create(superClass &amp;&amp; superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); <span class="missing-if-branch" title="else path not taken" >E</span>if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : <span class="branch-1 cbranch-no" title="branch not covered" >subClass.__proto__ = superClass;</span> } //
+&nbsp;
+var POSITIONS = ['start', 'end'];
+&nbsp;
+var Instrumenter = exports.Instrumenter = (function (_istanbul$Instrumente) {
+  _inherits(Instrumenter, _istanbul$Instrumente);
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function Instrumenter() {</span>
+<span class="cstat-no" title="statement not covered" >    var options = arguments.length &lt;= 0 || arguments[0] === undefined ? {} : arguments[0];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    _classCallCheck(this, Instrumenter);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Instrumenter).call(this));</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    _istanbul2.default.Instrumenter.call(_this, options);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    _this.babelOptions = _extends({</span>
+      sourceMap: true
+    }, options &amp;&amp; options.babel || {});
+<span class="cstat-no" title="statement not covered" >    return _this;</span>
+  }
+&nbsp;
+  _createClass(Instrumenter, [{
+    key: 'instrumentSync',
+    value: <span class="fstat-no" title="function not covered" >function instrumentSync(code, fileName) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      var result = this._r = (0, _babelCore.transform)(code, _extends({}, this.babelOptions, { filename: fileName }));</span>
+<span class="cstat-no" title="statement not covered" >      this._babelMap = new _sourceMap.SourceMapConsumer(result.map);</span>
+&nbsp;
+      // PARSE
+<span class="cstat-no" title="statement not covered" >      var program = _esprima2.default.parse(result.code, {</span>
+        loc: true,
+        range: true,
+        tokens: this.opts.preserveComments,
+        comment: true
+      });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (this.opts.preserveComments) {</span>
+<span class="cstat-no" title="statement not covered" >        program = _escodegen2.default.attachComments(program, program.comments, program.tokens);</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return this.instrumentASTSync(program, fileName, code);</span>
+    }
+  }, {
+    key: 'getPreamble',
+    value: <span class="fstat-no" title="function not covered" >function getPreamble(sourceCode, emitUseStrict) {</span>
+<span class="cstat-no" title="statement not covered" >      var _this2 = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      [['s', 'statementMap'], ['f', 'fnMap'], ['b', 'branchMap']].forEach(<span class="fstat-no" title="function not covered" >function (_ref) {</span></span>
+<span class="cstat-no" title="statement not covered" >        var _ref2 = _slicedToArray(_ref, 2);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var metricName = _ref2[0];</span>
+<span class="cstat-no" title="statement not covered" >        var metricMapName = _ref2[1];</span>
+<span class="cstat-no" title="statement not covered" >        var metrics = _this2.coverState[metricName];</span>
+<span class="cstat-no" title="statement not covered" >        var metricMap = _this2.coverState[metricMapName];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var transformFctName = '_' + metricMapName + 'Transformer';</span>
+<span class="cstat-no" title="statement not covered" >        var transformedMetricMap = _this2[transformFctName](metricMap, metrics);</span>
+<span class="cstat-no" title="statement not covered" >        _this2.coverState[metricMapName] = transformedMetricMap;</span>
+      });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return _get(Object.getPrototypeOf(Instrumenter.prototype), 'getPreamble', this).call(this, sourceCode, emitUseStrict);</span>
+    }
+&nbsp;
+    ////
+&nbsp;
+  }, {
+    key: '_statementMapTransformer',
+    value: <span class="fstat-no" title="function not covered" >function _statementMapTransformer(metrics) {</span>
+<span class="cstat-no" title="statement not covered" >      var _this3 = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return Object.keys(metrics).map(<span class="fstat-no" title="function not covered" >function (index) {</span></span>
+<span class="cstat-no" title="statement not covered" >        return metrics[index];</span>
+      }).map(<span class="fstat-no" title="function not covered" >function (statementMeta) {</span>
+<span class="cstat-no" title="statement not covered" >        var _getMetricOriginalLoc = _this3._getMetricOriginalLocations([statementMeta]);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var _getMetricOriginalLoc2 = _slicedToArray(_getMetricOriginalLoc, 1);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var location = _getMetricOriginalLoc2[0];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return location;</span>
+      }).reduce(this._arrayToArrayLikeObject, {});
+    }
+  }, {
+    key: '_fnMapTransformer',
+    value: <span class="fstat-no" title="function not covered" >function _fnMapTransformer(metrics) {</span>
+<span class="cstat-no" title="statement not covered" >      var _this4 = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return Object.keys(metrics).map(<span class="fstat-no" title="function not covered" >function (index) {</span></span>
+<span class="cstat-no" title="statement not covered" >        return metrics[index];</span>
+      }).map(<span class="fstat-no" title="function not covered" >function (fnMeta) {</span>
+<span class="cstat-no" title="statement not covered" >        var _getMetricOriginalLoc3 = _this4._getMetricOriginalLocations([fnMeta.loc]);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var _getMetricOriginalLoc4 = _slicedToArray(_getMetricOriginalLoc3, 1);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var loc = _getMetricOriginalLoc4[0];</span>
+&nbsp;
+        // Force remove the last skip key
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (fnMeta.skip === undefined) {</span>
+<span class="cstat-no" title="statement not covered" >          delete fnMeta.skip;</span>
+<span class="cstat-no" title="statement not covered" >          if (loc.skip !== undefined) {</span>
+<span class="cstat-no" title="statement not covered" >            fnMeta.skip = loc.skip;</span>
+          }
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return _extends({}, fnMeta, { loc: loc });</span>
+      }).reduce(this._arrayToArrayLikeObject, {});
+    }
+  }, {
+    key: '_branchMapTransformer',
+    value: <span class="fstat-no" title="function not covered" >function _branchMapTransformer(metrics) {</span>
+<span class="cstat-no" title="statement not covered" >      var _this5 = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return Object.keys(metrics).map(<span class="fstat-no" title="function not covered" >function (index) {</span></span>
+<span class="cstat-no" title="statement not covered" >        return metrics[index];</span>
+      }).map(<span class="fstat-no" title="function not covered" >function (branchMeta) {</span>
+<span class="cstat-no" title="statement not covered" >        return _extends({}, branchMeta, {</span>
+          locations: _this5._getMetricOriginalLocations(branchMeta.locations)
+        });
+      }).reduce(this._arrayToArrayLikeObject, {});
+    }
+&nbsp;
+    ////
+&nbsp;
+  }, {
+    key: '_getMetricOriginalLocations',
+    value: <span class="fstat-no" title="function not covered" >function _getMetricOriginalLocations() {</span>
+<span class="cstat-no" title="statement not covered" >      var _this6 = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      var metricLocations = arguments.length &lt;= 0 || arguments[0] === undefined ? [] : arguments[0];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      var o = { line: 0, column: 0 };</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return metricLocations.map(<span class="fstat-no" title="function not covered" >function (generatedPositions) {</span></span>
+<span class="cstat-no" title="statement not covered" >        return [_this6._getOriginalPositionsFor(generatedPositions), generatedPositions];</span>
+      }).map(<span class="fstat-no" title="function not covered" >function (_ref3) {</span>
+<span class="cstat-no" title="statement not covered" >        var _ref4 = _slicedToArray(_ref3, 2);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var _ref4$ = _ref4[0];</span>
+<span class="cstat-no" title="statement not covered" >        var start = _ref4$.start;</span>
+<span class="cstat-no" title="statement not covered" >        var end = _ref4$.end;</span>
+<span class="cstat-no" title="statement not covered" >        var generatedPosition = _ref4[1];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var postitions = [start.line, start.column, end.line, end.column];</span>
+<span class="cstat-no" title="statement not covered" >        var isValid = postitions.every(<span class="fstat-no" title="function not covered" >function (n) {</span></span>
+<span class="cstat-no" title="statement not covered" >          return n !== null;</span>
+        });
+&nbsp;
+        // Matches behavior in _fnMapTransformer above.
+<span class="cstat-no" title="statement not covered" >        if (generatedPosition.skip === undefined) {</span>
+<span class="cstat-no" title="statement not covered" >          delete generatedPosition.skip;</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return isValid ? _extends({}, generatedPosition, { start: start, end: end }) : { start: o, end: o, skip: true };</span>
+      });
+    }
+  }, {
+    key: '_getOriginalPositionsFor',
+    value: <span class="fstat-no" title="function not covered" >function _getOriginalPositionsFor() {</span>
+<span class="cstat-no" title="statement not covered" >      var _this7 = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      var generatedPositions = arguments.length &lt;= 0 || arguments[0] === undefined ? { start: {}, end: {} } : arguments[0];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return POSITIONS.map(<span class="fstat-no" title="function not covered" >function (position) {</span></span>
+<span class="cstat-no" title="statement not covered" >        return [generatedPositions[position], position];</span>
+      }).reduce(<span class="fstat-no" title="function not covered" >function (originalPositions, _ref5) {</span>
+<span class="cstat-no" title="statement not covered" >        var _ref6 = _slicedToArray(_ref5, 2);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var generatedPosition = _ref6[0];</span>
+<span class="cstat-no" title="statement not covered" >        var position = _ref6[1];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var originalPosition = _this7._babelMap.originalPositionFor(generatedPosition);</span>
+        // remove extra keys
+<span class="cstat-no" title="statement not covered" >        delete originalPosition.name;</span>
+<span class="cstat-no" title="statement not covered" >        delete originalPosition.source;</span>
+<span class="cstat-no" title="statement not covered" >        originalPositions[position] = originalPosition;</span>
+<span class="cstat-no" title="statement not covered" >        return originalPositions;</span>
+      }, {});
+    }
+  }, {
+    key: '_arrayToArrayLikeObject',
+    value: <span class="fstat-no" title="function not covered" >function _arrayToArrayLikeObject(arrayLikeObject, item, index) {</span>
+<span class="cstat-no" title="statement not covered" >      arrayLikeObject[index + 1] = item;</span>
+<span class="cstat-no" title="statement not covered" >      return arrayLikeObject;</span>
+    }
+  }]);
+&nbsp;
+  return Instrumenter;
+})(_istanbul2.default.Instrumenter);
+&nbsp;</pre></td></tr>
+</table></pre>
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a> at Wed Apr 19 2017 16:00:37 GMT+0000 (UTC)</div>
+</div>
+</body>
+</html>
